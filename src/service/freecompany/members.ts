@@ -1,24 +1,23 @@
 import { Request } from "express";
 import { CssSelectorRegistry } from "../core/css-selector-registry";
-import * as classjob from "../lib/lodestone-css-selectors/profile/classjob.json";
+import * as members from "../../lib/lodestone-css-selectors/freecompany/members.json";
 import { PaginatedPageParser } from "../core/paginated-page-parser";
 
-export class ClassJob extends PaginatedPageParser {
+export class FCMembers extends PaginatedPageParser {
   protected getCSSSelectors(): CssSelectorRegistry {
-    return classjob;
+    return members;
   }
 
   protected getBaseURL(req: Request): string {
     return (
-      "https://na.finalfantasyxiv.com/lodestone/character/" +
-      req.params.characterId +
-      "/class_job"
+      "https://na.finalfantasyxiv.com/lodestone/freecompany/" +
+      req.params.fcId +
+      "/member"
     );
   }
 
   async parse(req: Request, columnsPrefix: string = ""): Promise<Object> {
     const fromSuper: any = await super.parse(req, columnsPrefix);
-    delete fromSuper.Pagination;
     return fromSuper;
   }
 }
