@@ -5,10 +5,11 @@
   "license": "MIT",
   "typings": "types/index.d.ts",
   "scripts": {
-    "express:start": "rimraf dist && tsc -p tsconfig.json && node dist/lib/server.js",
-    "copyfiles": "copyfiles package.json README.md dist",
-    "release": "rimraf dist && tsc -p tsconfig.json && yarn run copyfiles && HUSKY=0 npm publish ./dist",
+    "build": "tsc",
     "commit": "cz",
+    "docs:generate": "typedoc --entryPoints src --entryPointStrategy expand --exclude **/*.test.ts",
+    "docs:deploy": "yarn docs:generate && gh-pages -d docs",
+    "format": "prettier --write \\\"src/**/*.ts\\\" \\\"test/**/*.ts\\\"",
     "prepare": "husky install"
   },
   "dependencies": {
