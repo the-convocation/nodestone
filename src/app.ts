@@ -1,11 +1,11 @@
 import express from "express";
-import { Character } from "./profile/character";
-import { Achievements } from "./profile/achievements";
-import { ClassJob } from "./profile/classjob";
-import { FreeCompany } from "./freecompany/freecompany";
-import { FCMembers } from "./freecompany/members";
-import { CharacterSearch } from "./search/character-search";
-import { FreeCompanySearch } from "./search/freecompany-search";
+import { Character } from "./service/profile/character";
+import { Achievements } from "./service/profile/achievements";
+import { ClassJob } from "./service/profile/classjob";
+import { FreeCompany } from "./service/freecompany/freecompany";
+import { FCMembers } from "./service/freecompany/members";
+import { CharacterSearch } from "./service/search/character-search";
+import { FreeCompanySearch } from "./service/search/freecompany-search";
 
 const app = express();
 
