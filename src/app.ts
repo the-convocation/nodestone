@@ -19,11 +19,18 @@ const freecompanySearch = new FreeCompanySearch();
 
 export default function () {
 
-  app.get("/Character/Search", async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
+  app.use(function(req, res, next) {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
     if (req.method === "OPTIONS") {
       return res.sendStatus(200);
     }
+    else {
+      next();
+    }
+  });
+
+  app.get("/Character/Search", async (req, res) => {
     try {
       const parsed = await characterSearch.parse(req);
       return res.status(200).send(parsed);
@@ -33,10 +40,6 @@ export default function () {
   });
 
   app.get("/FreeCompany/Search", async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    if (req.method === "OPTIONS") {
-      return res.sendStatus(200);
-    }
     try {
       const parsed = await freecompanySearch.parse(req);
       return res.status(200).send(parsed);
@@ -46,12 +49,8 @@ export default function () {
   });
 
   app.get("/Character/:characterId", async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
     if ((req.query["columns"] as string)?.indexOf("Bio") > -1) {
       res.set("Cache-Control", "max-age=3600");
-    }
-    if (req.method === "OPTIONS") {
-      return res.sendStatus(200);
     }
     try {
       const character = await characterParser.parse(req, "Character.");
@@ -83,10 +82,6 @@ export default function () {
   });
 
   app.get("/FreeCompany/:fcId", async (req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    if (req.method === "OPTIONS") {
-      return res.sendStatus(200);
-    }
     try {
       const freeCompany = await freeCompanyParser.parse(req, "FreeCompany.");
       const parsed: any = {
