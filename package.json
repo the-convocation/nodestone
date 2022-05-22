@@ -7,8 +7,6 @@
   "scripts": {
     "build": "tsc",
     "commit": "cz",
-    "docs:generate": "typedoc --entryPoints src --entryPointStrategy expand --exclude **/*.test.ts",
-    "docs:deploy": "yarn docs:generate && gh-pages -d docs",
     "format": "prettier --write \\\"src/**/*.ts\\\" \\\"test/**/*.ts\\\"",
     "prepare": "husky install"
   },
