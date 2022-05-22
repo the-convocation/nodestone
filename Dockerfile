@@ -1,6 +1,6 @@
 # Use the official Node.js 14 image.
 # https://hub.docker.com/_/node
-FROM node:14
+FROM node:16
 # Create and change to the app directory.
 WORKDIR /usr/src/app
 # Copy application dependency manifests to the container image.
