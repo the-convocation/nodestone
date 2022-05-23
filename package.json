@@ -5,10 +5,9 @@
   "license": "MIT",
   "typings": "types/index.d.ts",
   "scripts": {
-    "express:start": "rimraf dist && tsc -p tsconfig.json && node dist/lib/server.js",
-    "copyfiles": "copyfiles package.json README.md dist",
-    "release": "rimraf dist && tsc -p tsconfig.json && yarn run copyfiles && HUSKY=0 npm publish ./dist",
+    "build": "tsc",
     "commit": "cz",
+    "format": "prettier --write \\\"src/**/*.ts\\\" \\\"test/**/*.ts\\\"",
     "prepare": "husky install"
   },
   "dependencies": {
