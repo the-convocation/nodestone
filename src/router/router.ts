@@ -1,12 +1,13 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
 
-const characterController = require('../controller/character.controller');
-const freeCompanyController = require('../controller/freeCompany.controller');
+export const router = express.Router();
 
-router.get("/character/search", characterController.search);
-router.get("/character/:id", characterController.get);
-router.get("/free-company/search", freeCompanyController.search);
-router.get("/free-company/:id", freeCompanyController.get);
+import * as characterController from '../controller/character.controller';
+import * as freeCompanyController from '../controller/freeCompany.controller';
 
-module.exports = router;
+router.get('/character/search', characterController.search);
+router.get('/character/:id', characterController.get);
+router.get('/free-company/search', freeCompanyController.search);
+router.get('/free-company/:id', freeCompanyController.get);
+
+export default router;
