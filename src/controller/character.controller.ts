@@ -19,9 +19,6 @@ export async function search(req: Request, res: Response) {
 }
 
 export async function get(req: Request, res: Response) {
-  if ((req.query['columns'] as string)?.indexOf('Bio') > -1) {
-    res.set('Cache-Control', 'max-age=3600');
-  }
   try {
     const character = await characterParser.parse(req);
     const parsed: any = {
