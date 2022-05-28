@@ -3,6 +3,7 @@ import { CharacterSearch } from '../service/search/character-search';
 import { Character } from '../service/profile/character';
 import { Achievements } from '../service/profile/achievements';
 import { ClassJob } from '../service/profile/classjob';
+import { StatusCodes } from 'http-status-codes';
 
 const characterSearch = new CharacterSearch();
 const characterParser = new Character();
@@ -12,9 +13,9 @@ const classJobParser = new ClassJob();
 export async function search(req: Request, res: Response) {
   try {
     const parsed = await characterSearch.parse(req);
-    res.status(200).send(parsed);
+    res.status(StatusCodes.OK).send(parsed);
   } catch (err: any) {
-    res.status(500).send(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
   }
 }
 
@@ -36,12 +37,12 @@ export async function get(req: Request, res: Response) {
     if (additionalData.includes('CJ')) {
       parsed.ClassJobs = await classJobParser.parse(req);
     }
-    res.status(200).send(parsed);
+    res.status(StatusCodes.OK).send(parsed);
   } catch (err: any) {
-    if (err.message === '404') {
-      res.sendStatus(404);
+    if (err.message === StatusCodes.NOT_FOUND) {
+      res.sendStatus(StatusCodes.NOT_FOUND);
     }
-    res.status(500).send(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
   }
 }
 

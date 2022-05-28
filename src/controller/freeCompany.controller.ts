@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { FreeCompany } from '../service/freecompany/freecompany';
 import { FCMembers } from '../service/freecompany/members';
 import { FreeCompanySearch } from '../service/search/freecompany-search';
+import { StatusCodes } from 'http-status-codes';
 
 const freeCompanyParser = new FreeCompany();
 const freeCompanyMemberParser = new FCMembers();
@@ -10,9 +11,9 @@ const freeCompanySearch = new FreeCompanySearch();
 export async function search(req: Request, res: Response) {
   try {
     const parsed = await freeCompanySearch.parse(req);
-    res.status(200).send(parsed);
+    res.status(StatusCodes.OK).send(parsed);
   } catch (err: any) {
-    res.status(500).send(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
   }
 }
 
@@ -31,12 +32,12 @@ export async function get(req: Request, res: Response) {
     if (additionalData.includes('FCM')) {
       parsed.FreeCompanyMembers = await freeCompanyMemberParser.parse(req);
     }
-    res.status(200).send(parsed);
+    res.status(StatusCodes.OK).send(parsed);
   } catch (err: any) {
-    if (err.message === '404') {
-      res.sendStatus(404);
+    if (err.message === StatusCodes.NOT_FOUND) {
+      res.sendStatus(StatusCodes.NOT_FOUND);
     }
-    res.status(500).send(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
   }
 }
 
