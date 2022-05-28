@@ -17,8 +17,8 @@ export class Achievements extends PaginatedPageParser {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  async parse(req: Request, columnsPrefix = ''): Promise<Object> {
-    const fromSuper: any = await super.parse(req, columnsPrefix);
+  async parse(req: Request): Promise<Object> {
+    const fromSuper: any = await super.parse(req);
     fromSuper.Pagination.ResultsTotal = +fromSuper.TotalAchievements;
     fromSuper.Pagination.ResultsPerPage = Math.ceil(
       +fromSuper.TotalAchievements / fromSuper.Pagination.PageTotal,

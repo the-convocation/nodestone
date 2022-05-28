@@ -17,8 +17,8 @@ export class ClassJob extends PaginatedPageParser {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  async parse(req: Request, columnsPrefix = ''): Promise<Object> {
-    const fromSuper: any = await super.parse(req, columnsPrefix);
+  async parse(req: Request): Promise<Object> {
+    const fromSuper: any = await super.parse(req);
     delete fromSuper.Pagination;
     return fromSuper;
   }

@@ -13,8 +13,8 @@ export abstract class PaginatedPageParser extends PageParser {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  async parse(req: Request, columnsPrefix = ''): Promise<Object> {
-    const baseParse: any = await super.parse(req, columnsPrefix);
+  async parse(req: Request): Promise<Object> {
+    const baseParse: any = await super.parse(req);
     delete baseParse.ListNextButton;
     baseParse.Pagination = {
       Page: +baseParse.CurrentPage,

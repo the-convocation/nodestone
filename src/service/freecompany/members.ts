@@ -17,7 +17,7 @@ export class FCMembers extends PaginatedPageParser {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  async parse(req: Request, columnsPrefix = ''): Promise<Object> {
-    return await super.parse(req, columnsPrefix);
+  async parse(req: Request): Promise<Object> {
+    return await super.parse(req);
   }
 }

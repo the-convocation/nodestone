@@ -18,37 +18,18 @@ export abstract class PageParser {
   protected abstract getCSSSelectors(): CssSelectorRegistry;
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  public async parse(req: Request, columnsPrefix = ''): Promise<Object> {
+  public async parse(req: Request): Promise<Object> {
     const { data } = await axios.get(this.getURL(req)).catch((err: any) => {
       throw new Error(err.response.status);
     });
     const dom = parseHTML(data);
     let { document } = dom.window;
-    const columnsQuery = req.query && req.query['columns'];
     const selectors = this.getCSSSelectors();
-    let columns: string[];
-    if (columnsQuery && !Array.isArray(columnsQuery)) {
-      columns = columnsQuery
-        .toString()
-        .split(',')
-        .filter((column) => {
-          return column.startsWith(columnsPrefix);
-        })
-        .map((column) => column.replace(columnsPrefix, ''));
-    } else if (columnsQuery && Array.isArray(columnsQuery)) {
-      columns = columnsQuery
-        .map((c) => c.toString())
-        .filter((column) => {
-          return column.startsWith(columnsPrefix);
-        })
-        .map((column) => column.replace(columnsPrefix, ''));
-    } else {
-      columns = Object.keys(selectors)
-        .map((key) => {
-          return PageParser.definitionNameToColumnName(key);
-        })
-        .filter((column) => column !== 'default');
-    }
+    const columns = Object.keys(selectors)
+      .map((key) => {
+        return PageParser.definitionNameToColumnName(key);
+      })
+      .filter((column) => column !== 'default');
     return columns.reduce((acc, column) => {
       const definition = PageParser.getDefinition(selectors, column);
       if (column === 'Root') {

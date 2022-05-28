@@ -18,7 +18,7 @@ export async function search(req: Request, res: Response) {
 
 export async function get(req: Request, res: Response) {
   try {
-    const freeCompany = await freeCompanyParser.parse(req, 'FreeCompany.');
+    const freeCompany = await freeCompanyParser.parse(req);
     const parsed: any = {
       FreeCompany: {
         ID: +req.params.fcId,
@@ -29,10 +29,7 @@ export async function get(req: Request, res: Response) {
       ? req.query.data
       : [req.query.data].filter((d) => !!d);
     if (additionalData.includes('FCM')) {
-      parsed.FreeCompanyMembers = await freeCompanyMemberParser.parse(
-        req,
-        'FreeCompanyMembers.',
-      );
+      parsed.FreeCompanyMembers = await freeCompanyMemberParser.parse(req);
     }
     res.status(200).send(parsed);
   } catch (err: any) {

@@ -23,7 +23,7 @@ export async function get(req: Request, res: Response) {
     res.set('Cache-Control', 'max-age=3600');
   }
   try {
-    const character = await characterParser.parse(req, 'Character.');
+    const character = await characterParser.parse(req);
     const parsed: any = {
       Character: {
         ID: +req.params.characterId,
@@ -34,13 +34,10 @@ export async function get(req: Request, res: Response) {
       ? req.query.data
       : [req.query.data].filter((d) => !!d);
     if (additionalData.includes('AC')) {
-      parsed.Achievements = await achievementsParser.parse(
-        req,
-        'Achievements.',
-      );
+      parsed.Achievements = await achievementsParser.parse(req);
     }
     if (additionalData.includes('CJ')) {
-      parsed.ClassJobs = await classJobParser.parse(req, 'ClassJobs.');
+      parsed.ClassJobs = await classJobParser.parse(req);
     }
     res.status(200).send(parsed);
   } catch (err: any) {
